@@ -41,9 +41,7 @@ class controller
         $this->nav('header');
         $new_csrf = new SecurityService();
 
-        if ($folderName == 'admin') {
             $this->nav('sidebar');
-        }
 
         include "app/views/" . $folderName . "/" . $file_name . '.php';
 
