@@ -49,6 +49,7 @@ class AdminController extends controller
             include 'app/models/courses.php';
             include 'app/models/classes.php';
 
+
             $terms = new terms();
             $courses = new courses();
             $classes = new classes();
@@ -57,7 +58,10 @@ class AdminController extends controller
             $showCourses = $courses->showCourses();
             $showClasses = $classes->showClassesWithDetails();
 
-            $this->view('manageCoursesTermsPage', ['terms' => $showTerms, 'courses' => $showCourses, 'classes' => $showClasses]);
+            $csrf_obj = new SecurityService();
+            $csrf = $csrf_obj->getCSRFToken();
+
+            $this->view('manageCoursesTermsPage', ['terms' => $showTerms, 'courses' => $showCourses, 'classes' => $showClasses,'csrf_token'=>$csrf]);
         } else {
             header('location: http://localhost/sina%20project/mvc/project/login');
             exit();
@@ -67,7 +71,7 @@ class AdminController extends controller
     public function addNewTerm()
     {
 
-        $csrf = $_POST['csrf-token'];
+        $csrf = $_POST['csrf_token'];
         $new_csrf = new SecurityService();
 
         if (!$new_csrf->validate_token($csrf)) {
@@ -87,7 +91,7 @@ class AdminController extends controller
     public function addNewCourse()
     {
 
-        $csrf = $_POST['csrf-token'];
+        $csrf = $_POST['csrf_token'];
         $new_csrf = new SecurityService();
 
         if (!$new_csrf->validate_token($csrf)) {
@@ -117,7 +121,9 @@ class AdminController extends controller
     public function showEditCourse()
     {
         if ($this->check_auth() && $this->is_admin()) {
-            $this->view('editCoursesForm');
+            $csrf_obj = new SecurityService();
+            $csrf = $csrf_obj->getCSRFToken();
+            $this->view('editCoursesForm',['csrf_token'=> $csrf]);
         } else {
             header('location: http://localhost/sina%20project/mvc/project/login');
             exit();
@@ -127,7 +133,7 @@ class AdminController extends controller
     public function editCourse()
     {
 
-        $csrf = $_POST['csrf-token'];
+        $csrf = $_POST['csrf_token'];
         $new_csrf = new SecurityService();
 
         if (!$new_csrf->validate_token($csrf)) {
@@ -147,7 +153,7 @@ class AdminController extends controller
 
     public function newClass()
     {
-        $csrf = $_POST['csrf-token'];
+        $csrf = $_POST['csrf_token'];
         $new_csrf = new SecurityService();
 
         if (!$new_csrf->validate_token($csrf)) {

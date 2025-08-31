@@ -10,8 +10,7 @@
 <body>
     <form action="http://localhost/sina%20project/mvc/project/user/request/new" method="post">
         
-        <input type="hidden" name="csrf-token" value="<?php echo $new_csrf->getCSRFToken(); ?>">
-
+        <input type="hidden" name="csrf_token" value="<?php echo $data['csrf_token']; ?>">
         <label for="">course name :</label>
         <select name="course_id">
             <?php foreach ($data['courses'] as $course) { ?>

@@ -39,12 +39,10 @@ class controller
         $folderName = $this->whichFolder($file_name);
 
         $this->nav('header');
-        $new_csrf = new SecurityService();
 
-            $this->nav('sidebar');
+        $this->nav('sidebar');
 
         include "app/views/" . $folderName . "/" . $file_name . '.php';
-
     }
 
     public function nav($file_name)

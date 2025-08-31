@@ -63,7 +63,7 @@
             <button onclick="toggleBtnForm('newClassBtn','newClassForm')" id="newClassBtn">ثبت کلاس درسی جدید</button>
             <form action="http://localhost/sina%20project/mvc/project/admin/newClass" style="display: none;" id="newClassForm" method="post">
 
-                <input type="hidden" name="csrf-token" value="<?php echo $new_csrf->getCSRFToken(); ?>">
+                <input type="hidden" name="csrf_token" value="<?php echo $data['csrf_token']; ?>">
 
                 <label for="course_id">course name : </label>
                 <select name="course_id">
@@ -143,7 +143,7 @@
             <button onclick="toggleBtnForm('newCourseBtn','newCourseForm')" id="newCourseBtn">ثبت واحد درسی جدید</button>
             <form action="http://localhost/sina%20project/mvc/project/admin/newCourse" style="display: none;" id="newCourseForm" method="post">
 
-                <input type="hidden" name="csrf-token" value="<?php echo $new_csrf->getCSRFToken(); ?>">
+                <input type="hidden" name="csrf_token" value="<?php echo $data['csrf_token']; ?>">
 
                 <label for="name">name : </label>
                 <input type="text" name="name" placeholder=" name ..."><br>
@@ -182,7 +182,7 @@
             <button onclick="toggleBtnForm('newTermBtn','newTermForm')" id="newTermBtn">ثبت ترم جدید</button>
             <form action="http://localhost/sina%20project/mvc/project/admin/newTerm" style="display: none;" id="newTermForm" method="post">
 
-                <input type="hidden" name="csrf-token" value="<?php echo $new_csrf->getCSRFToken(); ?>">
+                <input type="hidden" name="csrf_token" value="<?php echo $data['csrf_token']; ?>">
 
                 <label for="name">name:</label>
                 <input type="text" name="name" placeholder="term name..."><br>

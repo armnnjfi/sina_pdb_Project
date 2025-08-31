@@ -27,7 +27,10 @@ class UserController extends controller
             $showCourses = $courses->showCourses();
             $showClasses = $classes->showClassesWithDetails();
 
-            $this->view('UserRequestForm', ['terms' => $showTerms, 'courses' => $showCourses, 'classes' => $showClasses]);
+            $csrf_obj = new SecurityService();
+            $csrf = $csrf_obj->getCSRFToken();
+
+            $this->view('UserRequestForm', ['terms' => $showTerms, 'courses' => $showCourses, 'classes' => $showClasses, 'csrf_token' => $csrf]);
         } else {
             header('location: http://localhost/sina%20project/mvc/project/login');
             exit();
@@ -38,15 +41,13 @@ class UserController extends controller
     {
         if ($this->check_auth()) {
             if (isset($_POST['weekDays']) && isset($_POST['start_time']) && isset($_POST['end_time'])) {
-                
-
-                $csrf = $_POST ['csrf-token'];
+                $csrf = $_POST['csrf_token'];
                 $new_csrf = new SecurityService();
-
+                
                 if (!$new_csrf->validate_token($csrf)) {
                     return var_dump('Error : CSRF Token invalid.');
                 }
-                
+
                 $days_of_week = implode(', ', $_POST['weekDays']);
                 $start_time = $_POST['start_time'];
                 $end_time = $_POST['end_time'];
@@ -59,7 +60,7 @@ class UserController extends controller
                 $redirect_url = 'http://localhost/sina%20project/mvc/project/user/dashboard';
 
                 if ($classes->isSlotCompletelyAvailable($days_of_week, $start_time, $end_time)) {
-                    
+
                     $message = 'درخواست شما برای ادمین فرستاده شد';
 
                     include 'app/models/requests.php';

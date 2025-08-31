@@ -1,4 +1,4 @@
-<h3> Dear <?php echo $_SESSION['Name']; ?> </h3>
+<h3> Dear <?php echo $_SESSION['Name'];?> </h3>
 <h3>users list : </h3>
 <br>
 

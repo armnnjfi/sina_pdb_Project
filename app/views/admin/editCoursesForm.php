@@ -10,7 +10,7 @@
 <body>
     <form action="http://localhost/sina%20project/mvc/project/admin/editCourse" id="editCourseForm" method="post">
 
-        <input type="hidden" name="csrf-token" value="<?php echo $new_csrf->getCSRFToken(); ?>">
+        <input type="hidden" name="csrf_token" value="<?php echo $data['csrf_token']; ?>">
 
         <label>id : </label>
         <input type="text" name="id_edit" readonly value="<?php echo $_GET['courseId']; ?>"><br>

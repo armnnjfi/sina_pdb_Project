@@ -187,6 +187,12 @@ class route
                 'action' => 'submitRequest',
                 'method' => 'POST'
             ],
+            [
+                'url' => '#^admin/deleteCourse$#',
+                'controller' => 'AdminController',
+                'action' => 'deleteCourse',
+                'method' => 'GET'
+            ],
         ];
         $routing_fail = true;
         foreach ($urls_arr as $url_arr) {
