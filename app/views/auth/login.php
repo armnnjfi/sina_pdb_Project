@@ -10,8 +10,7 @@
 <body>
     <form action="http://localhost/sina%20project/mvc/project/login" method="POST">
         <!-- todo -->
-         
-        <!-- <input type="hidden" name="csrf-token" value="<?php //echo $csrf->getCSRFToken(); ?>"> -->
+        <input type="hidden" name="csrf_token" value="<?= $data['csrf_token']; ?>">
 
         <label for="">Name:</label>
         <input type="text" name="Name" placeholder="usertName...">

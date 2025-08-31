@@ -25,14 +25,11 @@ class AuthController extends controller
                 exit();
             }
         } else {
+            $csrf = new SecurityService();
+            $csrf->setCSRFToken();
+            $token = $csrf->getCSRFToken();
 
-            //todo
-            
-            // $csrf = new SecurityService();
-            // $csrf->setCSRFToken();
-
-
-            $this->view('login');
+            $this->view('login', ['csrf_token' => $token]);
         }
     }
 
@@ -63,34 +60,35 @@ class AuthController extends controller
     }
     public function login()
     {
-        $username = $_POST['Name'];
-        $password = $_POST['password'];
+        $csrf = new SecurityService();
+        $csrf_token = $_POST['csrf_token'] ?? '';
 
-        // $new_csrf = new SecurityService();
-        // if (!$new_csrf->validate_token($csrf)){
-        //     return var_dump('Error : CSRF Token invalid.');
-        // }
+        if (!$csrf->validate_token($csrf_token)) {
+            die("Error: CSRF token invalid.");
+        }
 
+        $username = $_POST['Name'] ?? '';
+        $password = $_POST['password'] ?? '';
 
         include 'app/models/users.php';
         $user = new users();
         $res = $user->find_user($username, $password);
+
         if ($res['response'] == 200) {
             $_SESSION['user_id'] = $res['message']['id'];
             $_SESSION['Name'] = $res['message']['name'];
             $_SESSION['role'] = $res['message']['role'];
             $_SESSION['is_auth'] = 1;
+
+            if ($this->is_admin()) {
+                header('location: ' . $this->redirect_url_admin);
+                exit();
+            } else {
+                header('location: ' . $this->redirect_url_user);
+                exit();
+            }
         } else {
             header('location: http://localhost/sina%20project/mvc/project/login');
-            exit();
-        }
-        // is user a admin ?
-
-        if ($this->is_admin()) {
-            header('location: ' . $this->redirect_url_admin);
-            exit();
-        } else {
-            header('location: ' . $this->redirect_url_user);
             exit();
         }
     }
